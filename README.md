@@ -1,2 +1,2 @@
-# obel-flygter-fra-politiet
+# obel-flygter-fra-gud :)
 live laugh obel

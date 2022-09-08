@@ -17,7 +17,7 @@ font = pygame.font.SysFont(None, 32)
 
 start_time = pygame.time.get_ticks() 
 
-speed = 1
+level = 1
 # Window size
 screen = pygame.display.set_mode((size))
 # Set title
@@ -46,40 +46,41 @@ while running:
     # level up
     counter += 1
 
-    # timer:
+    # Timer:
     counting_time = pygame.time.get_ticks() - start_time
 
-        # change milliseconds into minutes, seconds, milliseconds
+    # Change milliseconds into minutes, seconds, milliseconds
     counting_minutes = str(counting_time/60000).zfill(2)
     counting_seconds = str( (counting_time%60000)/1000 ).zfill(2)
     counting_millisecond = str(counting_time%1000).zfill(3)
 
-    counting_string = "%s" % (counting_seconds)
+    counting_string = f"{counting_seconds}S Level {level}"
 
     counting_text = font.render(str(counting_string), 1, (255,255,255))
     counting_rect = counting_text.get_rect(center = (300,50))
-    print(screen.get_rect().center)
 
-    # increase game difficulty overtime
-    if counter == 5000:
-        speed += 0.150
+    # Increase game difficulty overtime
+    if counter == 100:
+        level += 1 
         counter = 0
-        print("level up", speed)
+        print("level up", level, level*0.25 + 0.75)
 
     ms = clock.tick(200)
-    # gud animation
-    obel2_loc[1] += ms
+    # Gud animation
+    obel2_loc[1] += ms * (level*0.25 + 0.75)
     if obel2_loc[1] > height:
         if random.randint(0,1) == 0:
             obel2_loc.center=right_lane, -200
         else:
             obel2_loc.center=left_lane, -200
-    # lose
+
+    # Lose condition
     collide = obel_loc.colliderect(obel2_loc)
     if collide:
         print("gud fik dig du kommer nu i himlen")
         break
-    # event listeners
+
+    # Event listeners
     for event in pygame.event.get():
         if event.type == QUIT:
             running = False
